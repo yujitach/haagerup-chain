@@ -96,7 +96,7 @@ int main(){
     // Set the parameters controlling the accuracy of the DMRG
     // calculation for each DMRG sweep. 
     //
-    auto sweeps = Sweeps(30);
+    auto sweeps = Sweeps(10000);
     sweeps.maxdim() = 10,20,100,100,200;
     sweeps.cutoff() = 1E-10;
     sweeps.niter() = 2;
@@ -105,7 +105,7 @@ int main(){
     // Begin the DMRG calculation
     // for the ground state
     //
-    auto [en,psi] = dmrg(H,MPS(InitState(sites,"t")),sweeps,{"Quiet=",true});
+    auto [en,psi] = dmrg(H,InitState(sites,"t"),sweeps,{"Quiet",true});
 
     for(auto b=1;b<N;b++){
         psi.position(b); 
