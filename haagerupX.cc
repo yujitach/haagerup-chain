@@ -196,7 +196,7 @@ int main(){
 
     writeToFile("haagerup10.psi",psi);
     int s=10;
-    for(int i :range1(10)){
+    for(;;){
         MPS psi0(sites);
         readFromFile(format("haagerup%d.psi",s),psi0);
         dumpEE(psi0);
