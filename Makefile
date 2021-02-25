@@ -9,7 +9,7 @@ LIBRARY_DIR=../itensor
 #    set APP to 'myappname'. Running 'make' will compile the app.
 #    Running 'make debug' will make a program called 'myappname-g'
 #    which includes debugging symbols and can be used in gdb (Gnu debugger);
-APP=golden
+APP=haagerupX
 
 # 4. Add any headers your program depends on here. The make program
 #    will auto-detect if these headers have changed and recompile your app.
