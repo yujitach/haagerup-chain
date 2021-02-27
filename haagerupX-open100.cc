@@ -89,7 +89,7 @@ inline int mod(int x,int N){
         return x-N;
     return x;
 }
-const int N = 50;
+const int N = 100;
 
 void dumpEE(MPS psi){
     for(auto b=1;b<N;b++){
@@ -123,7 +123,7 @@ int main(){
     auto ampo = AutoMPO(sites);
         
     // set up excluded pairs
-    for(int j = 1; j <= N; ++j){
+    for(int j = 1; j <= N-1; ++j){
 
         ampo += U,"n1",j,"n1",mod(j+1,N);
         ampo += U,"n1",j,"na",mod(j+1,N);
@@ -169,7 +169,7 @@ int main(){
     }
 
 //  projectors
-    for(int j = 1; j <= N; ++j){
+    for(int j = 1; j <= N-2; ++j){
         ampo += K,"n1",j,"nr",mod(j+1,N),"n1",mod(j+2,N);
         ampo += K,"na",j,"nar",mod(j+1,N),"na",mod(j+2,N);
         ampo += K,"nb",j,"nbr",mod(j+1,N),"nb",mod(j+2,N);
@@ -194,11 +194,11 @@ int main(){
     //
     auto [en,psi] = dmrg(H,MPS(InitState(sites,"r")),sweeps,{"Quiet=",true});
 
-    writeToFile("haagerup10.psi",psi);
     int s=10;
+    writeToFile(format("%d-haagerup-open-%d.psi",N,s),psi);
     for(;;){
         MPS psi0(sites);
-        readFromFile(format("haagerup%d.psi",s),psi0);
+        readFromFile(format("%d-haagerup-open-%d.psi",N,s),psi0);
         dumpEE(psi0);
         s+=10;
         auto sw=Sweeps(10);
@@ -207,7 +207,7 @@ int main(){
         sw.niter()=2;
         sw.noise()=1E-8;
         auto [en,psi1]=dmrg(H,psi0,sw,{"Quiet",true});
-        writeToFile(format("haagerup%d.psi",s),psi1);
+        writeToFile(format("%d-haagerup-open-%d.psi",N,s),psi1);
     }
     return 0;
 }

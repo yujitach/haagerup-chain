@@ -89,7 +89,7 @@ inline int mod(int x,int N){
         return x-N;
     return x;
 }
-const int N = 50;
+const int N = 100;
 
 void dumpEE(MPS psi){
     for(auto b=1;b<N;b++){
@@ -194,11 +194,11 @@ int main(){
     //
     auto [en,psi] = dmrg(H,MPS(InitState(sites,"r")),sweeps,{"Quiet=",true});
 
-    writeToFile("haagerup10.psi",psi);
     int s=10;
+    writeToFile(format("%d-haagerup-closed-%d.psi",N,s),psi);
     for(;;){
         MPS psi0(sites);
-        readFromFile(format("haagerup%d.psi",s),psi0);
+        readFromFile(format("%d-haagerup-closed-%d.psi",N,s),psi0);
         dumpEE(psi0);
         s+=10;
         auto sw=Sweeps(10);
@@ -207,7 +207,7 @@ int main(){
         sw.niter()=2;
         sw.noise()=1E-8;
         auto [en,psi1]=dmrg(H,psi0,sw,{"Quiet",true});
-        writeToFile(format("haagerup%d.psi",s),psi1);
+        writeToFile(format("%d-haagerup-closed-%d.psi",N,s),psi1);
     }
     return 0;
 }
